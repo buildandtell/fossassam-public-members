@@ -27,6 +27,6 @@ jq-add-record-public: $(PUBLIC_FILEPATH)
 	mv $(PUBLIC_FILEPATH).tmp $(PUBLIC_FILEPATH)
 
 clean:
-	rm -rf private.json
+	rm -rf private.json tags
 
 .PHONY: git-config git-add-public git-add-private jq-add-record-public jq-add-record-private

@@ -21,9 +21,9 @@ jobs:
         USERNAME: ${{ github.event.client_payload.username }}
         EMAIL: ${{ github.event.client_payload.email }}
       run: |
-        make decrypt
+        make decrypt-private
         make jq-add-record-private
-        make encrypt
+        make encrypt-private
         make git-add-private
         git commit -m "Adding $USERNAME to private record."
     - name: Push adding name
