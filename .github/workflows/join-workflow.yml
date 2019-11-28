@@ -1,0 +1,32 @@
+on: repository_dispatch
+name: Join Discord Workflow
+jobs:
+  benchmark_start:
+    name: Add user
+    if: github.event.action == 'add_user'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v1
+    - name: Add to public record
+      env:
+        USERNAME: ${{ github.event.client_payload.username }}
+      run: |
+        make jq-add-record-public
+        make git-add-public
+        git commit -m "Adding $USERNAME to public record."
+    - name: Add to private record
+      env:
+        GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+        USERNAME: ${{ github.event.client_payload.username }}
+        EMAIL: ${{ github.event.client_payload.email }}
+      run: |
+        make decrypt
+        make jq-add-record-private
+        make encrypt
+        make git-add-private
+        git commit -m "Adding $USERNAME to private record."
+    - name: Push adding name
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
