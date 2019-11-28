@@ -29,4 +29,4 @@ jobs:
     - name: Push adding name
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+        github_token: ${{ secrets.KUMURA_GITHUB_TOKEN }}
